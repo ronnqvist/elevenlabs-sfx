@@ -1,0 +1,84 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "elevenlabs-sfx"
+version = "0.1.0"
+description = "A Python library for generating sound effects using the ElevenLabs API."
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    {name = "Cline (AI Agent)", email = "noreply@example.com"}
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Multimedia :: Sound/Audio :: Sound Synthesis",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "elevenlabs>=1.2.0,<2.0.0" # Using < for < to be XML safe
+]
+
+[project.urls]
+Homepage = "https://github.com/your-username/elevenlabs-sfx" # Placeholder
+Repository = "https://github.com/your-username/elevenlabs-sfx" # Placeholder
+
+[project.optional-dependencies]
+test = [
+    "pytest>=7.0",
+    "pytest-cov>=3.0",
+    "requests-mock>=1.9.0" # For mocking HTTP requests if needed beyond unittest.mock
+]
+
+[tool.hatch.version]
+path = "src/elevenlabs_sfx/__init__.py"
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/src",
+    "/tests",
+    "pyproject.toml",
+    "README.md",
+    "LICENSE"
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/elevenlabs_sfx"]
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra -q --cov=src/elevenlabs_sfx --cov-report=term-missing --cache-clear"
+testpaths = [
+    "tests",
+]
+
+[tool.coverage.run]
+source = ["src/elevenlabs_sfx"]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 80 # Example coverage target
+
+[tool.hatch.envs.default]
+skip-install = false # Default, but being explicit
+dependencies = [
+  "elevenlabs>=1.2.0,<2.0.0", # Explicitly add main dependency
+  "pytest",
+  "pytest-cov",
+  "requests-mock"
+]
+[tool.hatch.envs.default.scripts]
+test = "python -m pytest {args}"
+cov = "python -m pytest --cov-report=html --cov-report=term {args}"
+lint = "ruff check src tests" # Assuming ruff for linting, can be added later
